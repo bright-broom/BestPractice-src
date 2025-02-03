@@ -14,7 +14,7 @@ import type { Session } from "next-auth";
 
 declare module "next-auth" {
   interface User {
-    role?: string; // `role` プロパティを追加
+    role: string | undefined; // `role` プロパティを追加
   }
 
   interface Session {
@@ -37,17 +37,6 @@ export default async function HomePage() {
         <Contact />
       </div>
 
-      {/* 🔒 管理者のみに Admin ダッシュボードリンクを表示 */}
-      {session?.user?.role === "admin" && (
-        <div className="fixed bottom-4 right-4">
-          <Link
-            href="/admin"
-            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
-          >
-            Go to Admin Dashboard
-          </Link>
-        </div>
-      )}
     </div>
   );
 }
