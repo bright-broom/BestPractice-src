@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { getServerSession } from "next-auth";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
@@ -7,7 +9,22 @@ import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 import "@/styles/globals.css";
 
-export default function HomePage() {
+// 🛠️ `session.user` に `role` を追加
+import type { Session } from "next-auth";
+
+declare module "next-auth" {
+  interface User {
+    role?: string; // `role` プロパティを追加
+  }
+
+  interface Session {
+    user: User;
+  }
+}
+
+export default async function HomePage() {
+  const session: Session | null = await getServerSession();
+
   return (
     <div className="relative min-h-screen scroll-smooth">
       <div className="flex flex-col gap-1" aria-label="メインコンテンツ">
@@ -19,6 +36,18 @@ export default function HomePage() {
         <FAQ />
         <Contact />
       </div>
+
+      {/* 🔒 管理者のみに Admin ダッシュボードリンクを表示 */}
+      {session?.user?.role === "admin" && (
+        <div className="fixed bottom-4 right-4">
+          <Link
+            href="/admin"
+            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+          >
+            Go to Admin Dashboard
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

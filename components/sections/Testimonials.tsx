@@ -5,7 +5,6 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Container } from "@/components/ui/container";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { QuoteIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const testimonials = [
   {

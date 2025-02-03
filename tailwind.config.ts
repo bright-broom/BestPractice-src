@@ -4,12 +4,15 @@ const config: Config = {
   content: [
     "./app/**/*.{ts,tsx,mdx}",
     "./components/**/*.{ts,tsx,mdx}",
-    "./styles/**/*.{css}"
+    "./styles/**/*.css", // ✅ 修正
   ],
   theme: {
     container: {
       center: true,
       padding: "2rem",
+      screens: {
+        "2xl": "1400px", // ✅ `2xl` の幅を指定
+      },
     },
     extend: {
       colors: {
@@ -54,7 +57,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")], // ✅ shadcn/ui の推奨プラグイン追加
 };
 
 export default config;

@@ -1,3 +1,5 @@
+"use client";
+
 export default function Contact() {
   return (
     <section className="py-16 text-center text-gray-900 bg-gray-100">

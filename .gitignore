@@ -1,41 +1,47 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# 🚀 Node.js / Next.js の標準 `.gitignore`
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# 📂 Node Modules
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
+.vscode/
+.idea/
 
-# env files (can opt-in for committing if needed)
-.env*
+# ⚙️ Next.js ビルド & キャッシュ
+.next/
+out/
+.cache/
+.DS_Store
 
-# vercel
-.vercel
+# 🌎 環境変数（必ず `.env` はGit管理から除外！）
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# typescript
+# 📜 TypeScript / ESLint / Jest / その他のキャッシュ
 *.tsbuildinfo
-next-env.d.ts
+.eslintcache
+jest.config.js
+coverage/
+
+# 💾 Prisma / DB
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/
+
+# 📂 ログファイル
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.pid
+*.seed
+
+# 🛠️ Mac & Linux OS の不要ファイル
+.DS_Store
+Thumbs.db
