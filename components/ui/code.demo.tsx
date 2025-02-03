@@ -48,7 +48,12 @@ function Component() {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor={`${id}-email`}>Email</Label>
-              <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required />
+              <Input
+                id={`${id}-email`}
+                placeholder="hi@yourcompany.com"
+                type="email"
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor={`${id}-password`}>Password</Label>
@@ -63,11 +68,17 @@ function Component() {
           <div className="flex justify-between gap-2">
             <div className="flex items-center gap-2">
               <Checkbox id={`${id}-remember`} />
-              <Label htmlFor={`${id}-remember`} className="font-normal text-muted-foreground">
+              <Label
+                htmlFor={`${id}-remember`}
+                className="font-normal text-muted-foreground"
+              >
                 Remember me
               </Label>
             </div>
-            <a className="text-sm underline hover:no-underline" href="#">
+            <a
+              className="text-sm underline hover:no-underline"
+              href="/forgot-password"
+            >
               Forgot password?
             </a>
           </div>

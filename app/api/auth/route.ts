@@ -1,12 +1,32 @@
 import NextAuth from "next-auth";
-import type { SessionStrategy } from "next-auth";
+import type { AuthOptions, SessionStrategy } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import type { Adapter } from "next-auth/adapters";
 
-const authOptions = {
-  adapter: PrismaAdapter(prisma),
+export interface CustomUser {
+  id: string;
+  email: string;
+  name: string | null;
+  role: string;
+}
+
+declare module "next-auth" {
+  interface Session {
+    user: CustomUser;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role?: string;
+  }
+}
+
+export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -17,10 +37,15 @@ const authOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const user = await prisma.user.findFirst({ where: { email: credentials.email } });
+        const user = await prisma.user.findFirst({
+          where: { email: credentials.email },
+        });
         if (!user) return null;
 
-        const isValidPassword = await bcrypt.compare(credentials.password, user.password || "");
+        const isValidPassword = await bcrypt.compare(
+          credentials.password,
+          user.password || ""
+        );
         if (!isValidPassword) return null;
 
         return {
@@ -28,10 +53,31 @@ const authOptions = {
           email: user.email,
           name: user.name,
           role: user.role,
-        };
+        } as CustomUser;
       },
     }),
   ],
+  callbacks: {
+    // サインイン時、管理者ユーザーなら /admin へリダイレクト
+    signIn: async ({ user }) => {
+      if ((user as CustomUser).role === "admin") {
+        return "/admin";
+      }
+      return true;
+    },
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.role = (user as CustomUser).role;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        (session.user as CustomUser).role = token.role as string;
+      }
+      return session;
+    },
+  },
   session: { strategy: "jwt" as SessionStrategy },
   pages: {
     signIn: "/api/auth/signin",

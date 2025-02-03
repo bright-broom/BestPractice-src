@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -33,7 +29,21 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    /* シャドウシステム */
+    --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --shadow-4: 0 16px 32px rgba(0, 0, 0, 0.12);
+
+    /* フォントファミリー */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
   }
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -59,6 +69,12 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    /* ダークモード用シャドウ */
+    --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.4);
+    --shadow-4: 0 16px 32px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -68,5 +84,37 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+  h1 {
+    @apply text-heading-1;
+  }
+  h2 {
+    @apply text-heading-2;
+  }
+  h3 {
+    @apply text-heading-3;
+  }
+  h4 {
+    @apply text-heading-4;
+  }
+}
+
+/* ユーティリティクラス */
+@layer components {
+  .layout-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .transition-standard {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+
+  .interactive-scale {
+    @apply hover:scale-[1.02] active:scale-[0.98] transition-standard;
   }
 }

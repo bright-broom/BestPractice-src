@@ -33,7 +33,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
+      className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50"
       aria-labelledby="hero-heading"
     >
       <div 
@@ -50,7 +50,7 @@ const Hero = () => {
         >
           <motion.h1
             id="hero-heading"
-            className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl"
+            className="text-4xl font-bold tracking-tighter text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl"
             variants={fadeInUpVariant}
             initial="hidden"
             animate="visible"
@@ -61,7 +61,7 @@ const Hero = () => {
           </motion.h1>
           
           <motion.p
-            className="max-w-2xl mx-auto mt-6 text-base text-gray-300 sm:text-lg md:text-xl"
+            className="max-w-2xl mx-auto mt-6 text-base text-gray-600 sm:text-lg md:text-xl"
             variants={fadeInUpVariant}
             initial="hidden"
             animate="visible"
@@ -106,7 +106,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.p
-            className="mt-8 text-sm text-gray-400"
+            className="mt-8 text-sm text-gray-500"
             variants={fadeInUpVariant}
             initial="hidden"
             animate="visible"

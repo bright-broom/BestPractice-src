@@ -2,7 +2,6 @@
 
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import * as React from "react";
-
 import { cn } from "../../lib/utils";
 
 const Checkbox = React.forwardRef<
@@ -25,7 +24,10 @@ const Checkbox = React.forwardRef<
           viewBox="0 0 9 9"
           fill="currentcolor"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          role="presentation"
         >
+          <title>Indeterminate</title>
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -39,7 +41,10 @@ const Checkbox = React.forwardRef<
           viewBox="0 0 9 9"
           fill="currentcolor"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          role="presentation"
         >
+          <title>Checked</title>
           <path
             fillRule="evenodd"
             clipRule="evenodd"

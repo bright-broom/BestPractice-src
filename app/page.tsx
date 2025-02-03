@@ -8,19 +8,7 @@ import Pricing from "@/components/sections/Pricing";
 import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 import "@/styles/globals.css";
-
-// 🛠️ `session.user` に `role` を追加
 import type { Session } from "next-auth";
-
-declare module "next-auth" {
-  interface User {
-    role: string | undefined; // `role` プロパティを追加
-  }
-
-  interface Session {
-    user: User;
-  }
-}
 
 export default async function HomePage() {
   const session: Session | null = await getServerSession();
@@ -36,7 +24,6 @@ export default async function HomePage() {
         <FAQ />
         <Contact />
       </div>
-
     </div>
   );
 }

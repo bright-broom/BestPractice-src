@@ -1,9 +1,8 @@
-// app/admin/page.tsx
-export default function AdminDashboard() {
+export default function AdminPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      <p>Welcome to the admin panel.</p>
+    <div>
+      <h1>管理画面</h1>
+      <p>ここは管理者専用のダッシュボードです。</p>
     </div>
   );
 }

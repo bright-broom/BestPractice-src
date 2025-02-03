@@ -49,7 +49,7 @@ const fadeInUpVariant = {
 export default function Testimonials() {
   return (
     <section 
-      className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-gray-800"
+      className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-50 to-white"
       aria-labelledby="testimonials-heading"
     >
       <div 
@@ -68,11 +68,11 @@ export default function Testimonials() {
         >
           <h2 
             id="testimonials-heading"
-            className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
           >
             お客様の声
           </h2>
-          <p className="max-w-2xl mx-auto mt-6 text-lg leading-8 text-gray-300">
+          <p className="max-w-2xl mx-auto mt-6 text-lg leading-8 text-gray-600">
             多くのお客様にご満足いただいています
           </p>
         </motion.div>
@@ -94,17 +94,17 @@ export default function Testimonials() {
               viewport={{ once: true }}
               custom={0.3 + index * 0.1}
             >
-              <Card className="h-full transition-all duration-300 bg-white/5 backdrop-blur-sm hover:bg-white/10 border-white/10">
+              <Card className="h-full transition-all duration-300 bg-white hover:shadow-lg border-gray-100">
                 <CardHeader className="pb-4">
                   <QuoteIcon className="w-8 h-8 text-primary/50" aria-hidden="true" />
                 </CardHeader>
                 <CardContent>
                   <blockquote className="space-y-6">
-                    <p className="text-gray-300">
+                    <p className="text-gray-600">
                       {testimonial.feedback}
                     </p>
                     <footer className="flex items-center gap-4">
-                      <Avatar className="border-2 border-white/10">
+                      <Avatar className="border-2 border-gray-100">
                         <AvatarImage 
                           src={testimonial.avatar} 
                           alt={`${testimonial.name}の写真`}
@@ -114,10 +114,10 @@ export default function Testimonials() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="text-sm">
-                        <cite className="not-italic font-semibold text-white">
+                        <cite className="not-italic font-semibold text-gray-900">
                           {testimonial.name}
                         </cite>
-                        <p className="mt-1 text-gray-400">
+                        <p className="mt-1 text-gray-500">
                           {testimonial.position}
                         </p>
                       </div>

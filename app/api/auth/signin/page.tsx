@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
 import { useId, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { FormEvent } from "react";
 
 export default function SignInPage() {
   const id = useId();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const [isLoading, setIsLoading] = useState(false);
@@ -22,10 +23,9 @@ export default function SignInPage() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const remember = formData.get("remember") === "on";
 
     try {
-      const result = await signIn("credentials", {
+      await signIn("credentials", {
         email,
         password,
         callbackUrl,
@@ -42,11 +42,7 @@ export default function SignInPage() {
     <div className="container relative min-h-[100vh] flex-1 flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
         <div
-          className="absolute inset-0 bg-cover"
-          style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80)",
-          }}
+          className="absolute inset-0 bg-cover bg-[url('https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80')]"
           role="img"
           aria-label="Modern office workspace"
         />
@@ -71,8 +67,7 @@ export default function SignInPage() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo;This library has saved me countless hours of work and helped me deliver stunning
-              designs to my clients faster than ever before.&rdquo;
+              &ldquo;This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.&rdquo;
             </p>
             <footer className="text-sm">Sofia Davis</footer>
           </blockquote>
@@ -80,6 +75,16 @@ export default function SignInPage() {
       </div>
       <div className="p-4 lg:p-8 h-full flex items-center">
         <div className="mx-auto flex w-full flex-col items-center space-y-6 sm:w-[350px]">
+          <div className="w-full">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => router.push('/')}
+              className="mb-6 -ml-4 text-muted-foreground hover:text-foreground"
+            >
+              ← Back to Home
+            </Button>
+          </div>
           <div className="flex flex-col items-center gap-2">
             <div
               className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border"

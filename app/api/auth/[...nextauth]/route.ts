@@ -37,10 +37,15 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const user = await prisma.user.findFirst({ where: { email: credentials.email } });
+        const user = await prisma.user.findFirst({
+          where: { email: credentials.email },
+        });
         if (!user) return null;
 
-        const isValidPassword = await bcrypt.compare(credentials.password, user.password || "");
+        const isValidPassword = await bcrypt.compare(
+          credentials.password,
+          user.password || ""
+        );
         if (!isValidPassword) return null;
 
         return {
@@ -53,6 +58,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
+    // サインイン時、管理者ユーザーなら /admin へリダイレクトする
+    signIn: async ({ user }) => {
+      if ((user as CustomUser).role === "admin") {
+        return "/admin";
+      }
+      return true;
+    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.role = (user as CustomUser).role;
