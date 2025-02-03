@@ -223,10 +223,3 @@ touch best-practice/tests/{api.test.ts,auth.test.ts,components.test.ts}
 ```
 
 ---
-
-## **✅ コマンド解説**
-1. `mkdir -p ...` → **ディレクトリを一括作成**
-2. `touch ...` → **空のファイルを一括作成**
-
----
-
