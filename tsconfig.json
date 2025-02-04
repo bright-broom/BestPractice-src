@@ -23,44 +23,26 @@
         "name": "next"
       }
     ],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@app/*": [
-        "app/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@sections/*": [
-        "components/sections/*"
-      ],
-      "@ui/*": [
-        "components/ui/*"
-      ],
-      "@layout/*": [
-        "components/layout/*"
-      ],
-      "@hooks/*": [
-        "hooks/*"
-      ],
-      "@lib/*": [
-        "lib/*"
-      ],
-      "@store/*": [
-        "store/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@prisma/*": [
-        "prisma/*"
-      ]
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@components/*": ["src/components/*"],
+      "@ui/*": ["src/components/ui/*"],
+      "@button/*": ["src/components/ui/button"],
+      "@dropdown-menu/*": ["src/components/ui/dropdown-menu"],
+      "@avatar/*": ["src/components/ui/avatar"],
+      "@sheet/*": ["src/components/ui/sheet"],
+      "@layouts/*": ["src/components/layouts/*"],
+      "@sections/*": ["src/components/sections/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@lib/*": ["src/lib/*"],
+      "@store/*": ["src/lib/store/*"],
+      "@styles/*": ["src/styles/*"],
+      "@public/*": ["public/*"],
+      "@prisma/*": ["prisma/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/lib/utils/*"]
     },
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,

@@ -1,164 +1,188 @@
 # フォームコンポーネント
 
-このディレクトリには、フォーム関連のコンポーネントが含まれています。
+## 概要
 
-## FormField
+このディレクトリには、フォーム関連の高度なコンポーネントとバリデーションロジックが含まれています。UIプリミティブを組み合わせて、使いやすく堅牢なフォームインターフェースを提供します。
 
-`FormField`は、ラベル、インプット、エラーメッセージを含む完全なフォームフィールドを提供します。
+## コンポーネント構成
 
-### 基本的な使用方法
+### コアコンポーネント
+- `FormField` - フォームフィールドのラッパー
+- `FormControl` - 入力要素のコンテナ
+- `FormLabel` - アクセシブルなラベル
+- `FormMessage` - エラーメッセージ表示
+- `FormDescription` - フィールドの説明
 
+### カスタムフィールド
+- `TextField` - テキスト入力
+- `SelectField` - セレクトボックス
+- `CheckboxField` - チェックボックス
+- `RadioField` - ラジオボタン
+- `FileField` - ファイルアップロード
+
+### バリデーション統合
+- Zodスキーマとの連携
+- カスタムバリデーションルール
+- エラーメッセージのローカライゼーション
+
+## 使用方法
+
+### 基本的な例
 ```tsx
-import { FormField } from '@/components/forms/FormField';
+import { useForm } from "@/hooks/useForm";
+import { FormField } from "./FormField";
+import { z } from "zod";
 
-// 基本的な使用方法
-<FormField
-  label="ユーザー名"
-  placeholder="username123"
-  required
-/>
+const schema = z.object({
+  email: z.string().email("有効なメールアドレスを入力してください"),
+  password: z.string().min(8, "パスワードは8文字以上必要です"),
+});
 
-// フィールドの説明付き
-<FormField
-  label="メールアドレス"
-  type="email"
-  description="仕事用のメールアドレスを入力してください"
-  required
-/>
-
-// エラー表示
-<FormField
-  label="パスワード"
-  type="password"
-  error="パスワードは8文字以上である必要があります"
-/>
-
-// カスタムサイズ
-<FormField
-  label="検索"
-  size="lg"
-  startContent={<SearchIcon />}
-/>
-```
-
-### フォームフックとの統合
-
-`useForm`と`useField`フックを使用して、フォームの状態管理と検証を行うことができます：
-
-```tsx
-import { useForm } from '@/hooks/useForm';
-import { useField } from '@/hooks/useField';
-import { FormField } from '@/components/forms/FormField';
-import { loginFormSchema } from '@/types/form';
-
-interface LoginForm {
-  email: string;
-  password: string;
-}
-
-function LoginForm() {
-  const form = useForm<LoginForm>({
-    initialValues: {
-      email: '',
-      password: ''
-    },
-    validationSchema: loginFormSchema,
+export const LoginForm = () => {
+  const form = useForm({
+    schema,
     onSubmit: async (values) => {
-      // フォームの送信処理
-    }
-  });
-
-  const emailField = useField({
-    name: 'email',
-    value: form.values.email,
-    onChange: form.setFieldValue,
-    onBlur: () => form.setFieldTouched('email'),
-    validation: loginFormSchema.shape.email
+      // フォーム送信処理
+    },
   });
 
   return (
     <form onSubmit={form.handleSubmit}>
       <FormField
+        name="email"
         label="メールアドレス"
-        type="email"
-        field={emailField}
-        required
-      />
-      <button type="submit" disabled={form.state.status === 'loading'}>
-        ログイン
-      </button>
+        error={form.errors.email}
+      >
+        <input type="email" {...form.register("email")} />
+      </FormField>
+      
+      <FormField
+        name="password"
+        label="パスワード"
+        error={form.errors.password}
+      >
+        <input type="password" {...form.register("password")} />
+      </FormField>
+      
+      <button type="submit">ログイン</button>
     </form>
   );
-}
+};
 ```
 
-### Props
-
-#### FormField
-
-| プロパティ | 型 | デフォルト | 説明 |
-|------------|------|---------|-------------|
-| label | string | - | フィールドのラベル |
-| description | string | - | フィールドの説明文 |
-| error | string | - | エラーメッセージ |
-| required | boolean | false | 必須フィールドかどうか |
-| size | 'sm' \| 'md' \| 'lg' | 'md' | フィールドのサイズ |
-| startContent | ReactNode | - | 入力フィールドの前に表示するコンテンツ |
-| endContent | ReactNode | - | 入力フィールドの後に表示するコンテンツ |
-| field | UseFieldReturn | - | useFieldフックの戻り値 |
-
-その他のプロパティはHTMLの`input`要素に直接渡されます。
-
-### アクセシビリティ
-
-- 適切なARIA属性が自動的に設定されます
-- エラー状態はスクリーンリーダーに通知されます
-- キーボードナビゲーションに対応
-
-### ベストプラクティス
-
-1. **フォームフックの使用**
+### カスタムフィールドの例
 ```tsx
-// 推奨
-const emailField = useField({...});
-<FormField field={emailField} />
+import { TextField } from "./TextField";
+import { SelectField } from "./SelectField";
 
-// 非推奨
-<FormField value={value} onChange={handleChange} />
+export const UserForm = () => {
+  const form = useForm({
+    // フォーム設定
+  });
+
+  return (
+    <form>
+      <TextField
+        name="name"
+        label="名前"
+        placeholder="山田 太郎"
+        required
+      />
+      
+      <SelectField
+        name="role"
+        label="役割"
+        options={[
+          { value: "user", label: "一般ユーザー" },
+          { value: "admin", label: "管理者" },
+        ]}
+      />
+    </form>
+  );
+};
 ```
 
-2. **エラー処理**
-```tsx
-// 推奨
-<FormField
-  field={emailField}
-  description="正しいメールアドレスを入力してください"
-/>
+## アクセシビリティ
 
-// 非推奨
-{error && <p className="text-red-500">{error}</p>}
+各フォームコンポーネントは以下のアクセシビリティ機能を実装:
+
+- 適切なARIAラベルとロール
+- エラー状態の音声読み上げ
+- キーボードナビゲーション
+- フォーカス管理
+- 高コントラストモード対応
+
+## バリデーション
+
+### Zodスキーマの使用
+```typescript
+const schema = z.object({
+  username: z.string().min(3).max(20),
+  email: z.string().email(),
+  age: z.number().min(18),
+});
 ```
 
-3. **アクセシビリティ**
-```tsx
-// 推奨
-<FormField
-  label="検索"
-  type="search"
-  aria-label="サイト内検索"
-/>
-
-// 非推奨
-<FormField
-  placeholder="検索"
-  type="search"
-/>
+### カスタムバリデーション
+```typescript
+const customValidator = (value: string) => {
+  // カスタムバリデーションロジック
+  return value.length > 0 || "この項目は必須です";
+};
 ```
 
-### カスタマイズ
+## エラーハンドリング
 
-スタイルのカスタマイズは、以下の優先順位で行うことを推奨します：
+### エラーメッセージのカスタマイズ
+```typescript
+const errorMessages = {
+  required: "この項目は必須です",
+  email: "有効なメールアドレスを入力してください",
+  minLength: (min: number) => `${min}文字以上入力してください`,
+};
+```
 
-1. 提供されているpropsを使用（size, variant等）
-2. classNameによるスタイルの追加
-3. コンポーネントの拡張（最終手段）
+## パフォーマンス最適化
+
+- フォーム状態の最適化
+- 不要な再レンダリングの防止
+- メモ化されたコールバック
+- 遅延バリデーション
+
+## テスト
+
+### ユニットテスト
+```typescript
+describe("FormField", () => {
+  it("バリデーションエラーを正しく表示する", () => {
+    // テストコード
+  });
+});
+```
+
+### 統合テスト
+```typescript
+describe("LoginForm", () => {
+  it("正しい認証情報で送信できる", () => {
+    // テストコード
+  });
+});
+```
+
+## 開発ガイドライン
+
+1. 新しいフィールドの追加
+   - 共通のインターフェースに従う
+   - アクセシビリティを考慮
+   - エラーハンドリングを実装
+   - テストを作成
+
+2. バリデーションの追加
+   - Zodスキーマを使用
+   - エラーメッセージを定義
+   - 国際化対応を考慮
+
+3. パフォーマンスの考慮
+   - メモ化を適切に使用
+   - 再レンダリングを最小限に
+   - バンドルサイズを監視

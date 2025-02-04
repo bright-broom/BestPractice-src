@@ -89,6 +89,7 @@ const config: Config = {
         'slide-up': 'slideUp 0.4s ease-out',
         'slide-down': 'slideDown 0.4s ease-out',
         'scale': 'scale 0.2s ease-in-out',
+        'shimmer': 'shimmer 2s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -106,6 +107,11 @@ const config: Config = {
         scale: {
           '0%': { transform: 'scale(0.95)' },
           '100%': { transform: 'scale(1)' },
+        },
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
         },
       },
       screens: {
