@@ -5,6 +5,14 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Container } from "@/components/ui/container";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { QuoteIcon } from "lucide-react";
+import {
+  getSectionClass,
+  getAnimationVariant,
+  getHeadingClass,
+  getGridPatternClass,
+  getTransitionClass,
+} from "@/lib/design-system";
+import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
@@ -33,31 +41,21 @@ const testimonials = [
   }
 ];
 
-const fadeInUpVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay,
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  }),
-};
-
 export default function Testimonials() {
+  const sectionStyles = getSectionClass('alternate');
+  const fadeInUpVariant = getAnimationVariant('fadeInUp');
+
   return (
     <section 
-      className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-50 to-white"
+      className={cn(sectionStyles.padding, sectionStyles.background)}
       aria-labelledby="testimonials-heading"
     >
       <div 
-        className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"
+        className={getGridPatternClass(10)}
         aria-hidden="true"
       />
       
-      <Container>
+      <Container className={sectionStyles.container}>
         <motion.div
           className="text-center"
           variants={fadeInUpVariant}
@@ -68,11 +66,11 @@ export default function Testimonials() {
         >
           <h2 
             id="testimonials-heading"
-            className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+            className={getHeadingClass(2, { tracking: 'tight', align: 'center' })}
           >
             お客様の声
           </h2>
-          <p className="max-w-2xl mx-auto mt-6 text-lg leading-8 text-gray-600">
+          <p className="max-w-2xl mx-auto mt-6 text-lg leading-8 text-muted-foreground">
             多くのお客様にご満足いただいています
           </p>
         </motion.div>
@@ -94,17 +92,21 @@ export default function Testimonials() {
               viewport={{ once: true }}
               custom={0.3 + index * 0.1}
             >
-              <Card className="h-full transition-all duration-300 bg-white hover:shadow-lg border-gray-100">
+              <Card className={cn(
+                "h-full bg-card text-card-foreground border-border",
+                "hover:shadow-lg",
+                getTransitionClass('normal')
+              )}>
                 <CardHeader className="pb-4">
                   <QuoteIcon className="w-8 h-8 text-primary/50" aria-hidden="true" />
                 </CardHeader>
                 <CardContent>
                   <blockquote className="space-y-6">
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                       {testimonial.feedback}
                     </p>
                     <footer className="flex items-center gap-4">
-                      <Avatar className="border-2 border-gray-100">
+                      <Avatar className="border-2 border-border">
                         <AvatarImage 
                           src={testimonial.avatar} 
                           alt={`${testimonial.name}の写真`}
@@ -114,10 +116,10 @@ export default function Testimonials() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="text-sm">
-                        <cite className="not-italic font-semibold text-gray-900">
+                        <cite className="not-italic font-semibold text-foreground">
                           {testimonial.name}
                         </cite>
-                        <p className="mt-1 text-gray-500">
+                        <p className="mt-1 text-muted-foreground">
                           {testimonial.position}
                         </p>
                       </div>

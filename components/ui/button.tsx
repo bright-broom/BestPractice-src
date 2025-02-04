@@ -7,7 +7,7 @@ import {
   getSizeClasses,
   getElevation,
   getAnimation,
-  getFocusRingClass,
+  getInteractiveBaseClass,
   getTransitionClass,
 } from "../../lib/design-system";
 
@@ -16,8 +16,7 @@ const buttonVariants = cva(
     "inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium",
     "disabled:pointer-events-none disabled:opacity-50",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
-    getTransitionClass(),
-    getFocusRingClass(),
+    getInteractiveBaseClass(),
     getAnimation('scale')
   ),
   {

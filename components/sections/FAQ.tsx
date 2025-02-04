@@ -9,6 +9,13 @@ import {
 } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  getSectionClass,
+  getAnimationVariant,
+  getHeadingClass,
+  getGridPatternClass,
+  getTransitionClass,
+} from "@/lib/design-system";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -53,31 +60,21 @@ const faqs = [
   }
 ];
 
-const fadeInUpVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay,
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  }),
-};
-
 export default function FAQ() {
+  const sectionStyles = getSectionClass('alternate');
+  const fadeInUpVariant = getAnimationVariant('fadeInUp');
+
   return (
     <section 
-      className="relative py-24 overflow-hidden bg-gradient-to-b from-white to-gray-50"
+      className={cn(sectionStyles.padding, sectionStyles.background)}
       aria-labelledby="faq-heading"
     >
       <div 
-        className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-5"
+        className={getGridPatternClass(5)}
         aria-hidden="true"
       />
       
-      <Container>
+      <Container className={sectionStyles.container}>
         <motion.div
           className="text-center"
           variants={fadeInUpVariant}
@@ -88,11 +85,14 @@ export default function FAQ() {
         >
           <h2 
             id="faq-heading"
-            className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+            className={getHeadingClass(2, { tracking: 'tight', align: 'center' })}
           >
             よくある質問
           </h2>
-          <p className="max-w-2xl mx-auto mt-6 text-lg leading-8 text-gray-600">
+          <p className={cn(
+            "mt-6 text-lg leading-8 text-muted-foreground",
+            "max-w-2xl mx-auto"
+          )}>
             お客様からよくいただくご質問をまとめました
           </p>
         </motion.div>
@@ -114,9 +114,13 @@ export default function FAQ() {
               viewport={{ once: true }}
               custom={0.3 + categoryIndex * 0.1}
             >
-              <Card className="border-none shadow-sm">
+              <Card className={cn(
+                "border-border shadow-sm",
+                "bg-card text-card-foreground",
+                getTransitionClass('normal')
+              )}>
                 <CardHeader className="pb-4">
-                  <h3 className="text-xl font-semibold text-gray-900">
+                  <h3 className={getHeadingClass(3, { tracking: 'normal' })}>
                     {category.category}
                   </h3>
                 </CardHeader>
@@ -131,18 +135,22 @@ export default function FAQ() {
                         key={faq.question}
                         value={`item-${categoryIndex}-${index}`}
                         className={cn(
-                          "border-b border-gray-200 last:border-0",
-                          "transition-colors duration-200",
-                          "data-[state=open]:bg-gray-50/50"
+                          "border-border",
+                          "last:border-0",
+                          getTransitionClass('fast'),
+                          "data-[state=open]:bg-muted/50"
                         )}
                       >
-                        <AccordionTrigger className="text-left hover:no-underline">
-                          <span className="text-base text-gray-900 hover:text-primary">
+                        <AccordionTrigger className={cn(
+                          "text-left hover:no-underline",
+                          "text-foreground hover:text-primary"
+                        )}>
+                          <span className="text-base font-medium">
                             {faq.question}
                           </span>
                         </AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-gray-600">
+                          <p className="text-muted-foreground">
                             {faq.answer}
                           </p>
                         </AccordionContent>

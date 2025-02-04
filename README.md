@@ -1,225 +1,177 @@
-# 🚀 Best Practice Project  
+# デザインシステムガイド
 
-このプロジェクトは **Next.js 15 (App Router) + TypeScript + TailwindCSS + Prisma + NextAuth.js + Zustand** を使用したモダンなフルスタックアプリのベストプラクティスを提供します。  
+## 概要
 
-## 📂 ディレクトリ構成  
-```
-📦 best-practice  
-├── 📂 app              # Next.js App Router 構成  
-│   ├── 📂 api         # API エンドポイント  
-│   │   ├── analytics  # アクセス解析API  
-│   │   ├── auth       # 認証API (NextAuth.js)  
-│   │   ├── contact    # お問い合わせAPI  
-│   │   ├── subscribe  # メール購読API  
-│   ├── 📂 admin       # 管理画面  
-│   ├── 📂 blog        # ブログ  
-│   ├── 📂 portfolio   # ポートフォリオ  
-│   ├── layout.tsx     # レイアウト設定  
-│   ├── page.tsx       # ホームページ  
-│   ├── middleware.ts  # ミドルウェア  
-├── 📂 components       # UIコンポーネント  
-│   ├── 📂 sections    # ページセクション  
-│   ├── 📂 layout      # レイアウトコンポーネント  
-│   ├── 📂 ui          # 汎用UI（ボタン、モーダル など）  
-├── 📂 hooks           # カスタムフック  
-├── 📂 lib             # ユーティリティ関数 & Prisma クライアント  
-├── 📂 prisma          # Prisma ORM 設定 & マイグレーション  
-├── 📂 store           # Zustand ステート管理  
-├── 📂 styles          # Tailwind グローバルスタイル  
-├── 📂 public          # 静的ファイル（画像、アイコン）  
-├── next.config.ts     # Next.js 設定  
-├── tailwind.config.ts # Tailwind 設定  
-├── tsconfig.json      # TypeScript 設定  
-```
+このデザインシステムは、一貫性のある視覚言語とコンポーネントの再利用を実現するために設計されています。システムは以下の主要な要素で構成されています：
 
-## 🛠 技術スタック  
-- **フロントエンド:** Next.js 15 (App Router) / React 19 / TypeScript  
-- **スタイリング:** TailwindCSS / shadcn/ui / Framer Motion  
-- **状態管理:** Zustand / React Query  
-- **認証:** NextAuth.js  
-- **バックエンド:** Next.js API Routes / Prisma ORM (PostgreSQL)  
-- **監視・分析:** Sentry / アクセス解析API  
+- カラーシステム
+- タイポグラフィ
+- スペーシング
+- エレベーション（シャドウ）
+- アニメーション
+- レイアウトパターン
+- コンポーネントバリアント
 
-## 🚀 セットアップ  
-### 1️⃣ **リポジトリをクローン**
-```bash
-git clone https://github.com/your-repo/best-practice.git
-cd best-practice
+## 使用方法
+
+### 1. カラーシステムの使用
+
+カラーバリアントを使用してコンポーネントのスタイルを定義：
+
+```typescript
+import { getColorVariant } from '../lib/design-system';
+
+// プライマリカラーを適用
+const primaryClasses = getColorVariant('primary');
+// {
+//   background: 'bg-primary',
+//   text: 'text-primary-foreground',
+//   hover: 'hover:bg-primary/90',
+//   border: 'border-primary'
+// }
 ```
 
-### 2️⃣ **環境変数を設定**
-`.env.local` を作成し、データベースURLなどを記述
-```bash
-cp .env.example .env.local
+### 2. タイポグラフィ
+
+一貫したテキストスタイルを適用：
+
+```typescript
+import { getTypography } from '../lib/design-system';
+
+// 見出しスタイルを適用
+const headingClass = getTypography('heading-1');
 ```
 
-### 3️⃣ **依存関係をインストール**
-```bash
-npm install
+### 3. スペーシングとレイアウト
+
+グリッドとフレックスレイアウトの使用：
+
+```typescript
+import { getGridClass, getFlexClass } from '../lib/design-system';
+
+// レスポンシブグリッド
+const gridClass = getGridClass({
+  cols: 3,
+  gap: 'spacing-4',
+  responsive: true
+});
+
+// フレックスレイアウト
+const flexClass = getFlexClass({
+  direction: 'row',
+  wrap: true,
+  gap: 'spacing-4',
+  align: 'center',
+  justify: 'between'
+});
 ```
 
-### 4️⃣ **データベースのセットアップ**
-```bash
-npx prisma migrate dev --name init
-npx prisma generate
+### 4. アニメーションとトランジション
+
+インタラクティブな要素にアニメーションを追加：
+
+```typescript
+import { getAnimation, getTransitionClass } from '../lib/design-system';
+
+const animatedClass = getAnimation('fade-in');
+const transitionClass = getTransitionClass('normal');
 ```
 
-### 5️⃣ **開発サーバーを起動**
-```bash
-npm run dev
-```
-➡ `http://localhost:3000` でアプリを確認  
+### 5. コンポーネントサイズ
 
-## ✅ **機能一覧**
-- **ユーザー認証:** NextAuth.js + Prisma  
-- **管理画面:** 記事・ポートフォリオ管理  
-- **ブログ:** マークダウン対応の静的ブログ  
-- **アクセス解析:** API 経由で記録  
-- **アニメーション:** Framer Motion を活用  
-- **UIコンポーネント:** shadcn/ui を統合  
+一貫したサイジングを適用：
 
-## 🛠 **開発ガイド**
-### **1️⃣ コードフォーマット**
-```bash
-npx biome check --apply
-```
-### **2️⃣ 型チェック**
-```bash
-npm run type-check
-```
-### **3️⃣ ESLint + Prettier**
-```bash
-npm run lint
+```typescript
+import { getSizeClasses } from '../lib/design-system';
+
+const sizeClasses = getSizeClasses('md');
+// {
+//   padding: 'px-4 py-2',
+//   fontSize: 'text-body-base'
+// }
 ```
 
----
+## ベストプラクティス
 
-## **📂 完全なディレクトリ構成**
-プロジェクトのディレクトリ構成を **全ファイル含めて** 記述し、一括で作成できるターミナルコマンドを用意しました。
+1. **一貫性の維持**
+   - デザインシステムの関数を使用して、スタイルの一貫性を保持
+   - カスタムCSS記述を最小限に抑える
 
-### **📂 ディレクトリツリー**
-```bash
-best-practice
-├── README.md
-├── .env.example
-├── .gitignore
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── tailwind.config.ts
-├── postcss.config.js
-├── next.config.ts
-├── next-env.d.ts
-├── prisma/
-│   ├── schema.prisma
-│   ├── seed.ts
-│   ├── migrations/
-├── public/
-│   ├── icons/
-│   │   ├── favicon.ico
-│   ├── images/
-│   │   ├── logo.png
-│   │   ├── banner.jpg
-├── styles/
-│   ├── globals.css
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   ├── middleware.ts
-│   ├── api/
-│   │   ├── analytics/route.ts
-│   │   ├── auth/route.ts
-│   │   ├── contact/route.ts
-│   │   ├── subscribe/route.ts
-│   ├── admin/
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   ├── articles/
-│   │   │   ├── page.tsx
-│   │   │   ├── new/page.tsx
-│   │   │   ├── [id]/edit.tsx
-│   │   ├── users/
-│   │   │   ├── page.tsx
-│   │   │   ├── [id]/edit.tsx
-│   │   ├── portfolio/
-│   │   │   ├── page.tsx
-│   │   │   ├── new/page.tsx
-│   │   │   ├── [id]/edit.tsx
-│   ├── blog/
-│   │   ├── page.tsx
-│   │   ├── [slug]/page.tsx
-│   ├── portfolio/
-│   │   ├── page.tsx
-│   │   ├── [slug]/page.tsx
-├── components/
-│   ├── layout/
-│   │   ├── Header.tsx
-│   │   ├── Footer.tsx
-│   ├── sections/
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   ├── Services.tsx
-│   │   ├── Testimonials.tsx
-│   │   ├── Pricing.tsx
-│   │   ├── FAQ.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Portfolio.tsx
-│   ├── ui/
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── input.tsx
-│   │   ├── modal.tsx
-│   │   ├── navigation.tsx
-│   │   ├── table.tsx
-│   │   ├── toast.tsx
-│   │   ├── tooltip.tsx
-│   │   ├── skeleton.tsx
-├── hooks/
-│   ├── use-toast.ts
-│   ├── use-auth.ts
-│   ├── use-theme.ts
-├── lib/
-│   ├── prisma.ts
-│   ├── utils.ts
-│   ├── logger.ts
-│   ├── api.ts
-├── store/
-│   ├── useAuthStore.ts
-│   ├── useThemeStore.ts
-├── tests/
-│   ├── api.test.ts
-│   ├── auth.test.ts
-│   ├── components.test.ts
+2. **レスポンシブデザイン**
+   - レスポンシブなグリッドとコンテナを活用
+   - ブレークポイントに応じた適切なレイアウト調整
+
+3. **アクセシビリティ**
+   - カラーコントラストを考慮したバリアントの使用
+   - インタラクティブ要素への適切なフォーカススタイルの適用
+
+4. **パフォーマンス**
+   - 必要な機能のみをインポート
+   - アニメーションの過剰使用を避ける
+
+## コンポーネント例
+
+### ボタンコンポーネント
+
+```typescript
+import { getColorVariant, getSizeClasses, getInteractiveBaseClass } from '../lib/design-system';
+
+const buttonClasses = cn(
+  getInteractiveBaseClass(),
+  getColorVariant('primary').background,
+  getColorVariant('primary').text,
+  getSizeClasses('md').padding
+);
 ```
 
----
+### カードコンポーネント
 
-## **🚀 一括でディレクトリ & ファイル作成**
-### **📌 1️⃣ ディレクトリ作成**
-```bash
-mkdir -p best-practice/{app/{api/{analytics,auth,contact,subscribe},admin/{articles/{new,[id]},users/{[id]},portfolio/{new,[id]}},blog/{[slug]},portfolio/{[slug]}},components/{layout,sections,ui},hooks,lib,store,tests,prisma/migrations,public/{icons,images},styles}
+```typescript
+import { getElevation, getSpacing } from '../lib/design-system';
+
+const cardClasses = cn(
+  'bg-card text-card-foreground',
+  getElevation('elevation-2'),
+  `p-${getSpacing('spacing-4')}`
+);
 ```
 
-### **📌 2️⃣ 空のファイル作成**
-```bash
-touch best-practice/{README.md,.env.example,.gitignore,package.json,package-lock.json,tsconfig.json,tailwind.config.ts,postcss.config.js,next.config.ts,next-env.d.ts}
-touch best-practice/styles/globals.css
-touch best-practice/prisma/{schema.prisma,seed.ts}
-touch best-practice/app/{layout.tsx,page.tsx,middleware.ts}
-touch best-practice/app/api/{analytics/route.ts,auth/route.ts,contact/route.ts,subscribe/route.ts}
-touch best-practice/app/admin/{layout.tsx,page.tsx}
-touch best-practice/app/admin/articles/{page.tsx,new/page.tsx,[id]/edit.tsx}
-touch best-practice/app/admin/users/{page.tsx,[id]/edit.tsx}
-touch best-practice/app/admin/portfolio/{page.tsx,new/page.tsx,[id]/edit.tsx}
-touch best-practice/app/blog/{page.tsx,[slug]/page.tsx}
-touch best-practice/app/portfolio/{page.tsx,[slug]/page.tsx}
-touch best-practice/components/layout/{Header.tsx,Footer.tsx}
-touch best-practice/components/sections/{Hero.tsx,About.tsx,Services.tsx,Testimonials.tsx,Pricing.tsx,FAQ.tsx,Contact.tsx,Portfolio.tsx}
-touch best-practice/components/ui/{button.tsx,card.tsx,input.tsx,modal.tsx,navigation.tsx,table.tsx,toast.tsx,tooltip.tsx,skeleton.tsx}
-touch best-practice/hooks/{use-toast.ts,use-auth.ts,use-theme.ts}
-touch best-practice/lib/{prisma.ts,utils.ts,logger.ts,api.ts}
-touch best-practice/store/{useAuthStore.ts,useThemeStore.ts}
-touch best-practice/tests/{api.test.ts,auth.test.ts,components.test.ts}
+### グリッドレイアウト
+
+```typescript
+import { getGridClass } from '../lib/design-system';
+
+const gridClasses = getGridClass({
+  cols: 4,
+  gap: 'spacing-6',
+  responsive: true
+});
 ```
 
----
+## ダークモード対応
+
+システムはダークモードに完全対応しています。CSS変数を通じてカラーとシャドウが自動的に切り替わります：
+
+```html
+<div class="dark">
+  <!-- ダークモード用のスタイルが自動適用 -->
+</div>
+```
+
+## チャートカラー
+
+データビジュアライゼーション用の専用カラーパレット：
+
+```typescript
+import { getChartColor } from '../lib/design-system';
+
+const chartColorClass = getChartColor(0); // 最初のチャートカラー
+```
+
+## カスタマイズ
+
+デザインシステムは`tailwind.config.ts`と`globals.css`で定義された変数を通じてカスタマイズ可能です：
+
+1. カラーの変更：CSS変数を更新
+2. スペーシングスケールの調整：Tailwind設定を更新
+3. アニメーションの追加：新しいキーフレームを定義

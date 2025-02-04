@@ -58,12 +58,10 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    // サインイン時、管理者ユーザーなら /admin へリダイレクトする
-    signIn: async ({ user }) => {
-      if ((user as CustomUser).role === "admin") {
-        return "/admin";
-      }
-      return true;
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) return url;
+      if (url.startsWith("/")) return new URL(url, baseUrl).toString();
+      return baseUrl;
     },
     jwt: async ({ token, user }) => {
       if (user) {

@@ -124,8 +124,6 @@ export default function Header() {
               <span className="relative z-10 hover:text-primary transition-colors duration-200">About</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-200" />
             </Link>
-          </li>
-          <li>
             <Link 
               href="#services" 
               className="relative group py-2"
@@ -133,8 +131,6 @@ export default function Header() {
               <span className="relative z-10 hover:text-primary transition-colors duration-200">Services</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-200" />
             </Link>
-          </li>
-          <li>
             <Link 
               href="#contact" 
               className="relative group py-2"

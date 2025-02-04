@@ -4,20 +4,13 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import {
+  getSectionClass,
+  getAnimationVariant,
+  getHeadingClass,
+  getGridPatternClass,
+} from "@/lib/design-system";
 import { cn } from "@/lib/utils";
-
-const fadeInUpVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay,
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  }),
-};
 
 const Hero = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -31,17 +24,20 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const sectionStyles = getSectionClass('hero');
+  const fadeInUpVariant = getAnimationVariant('fadeInUp');
+
   return (
     <section
-      className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50"
+      className={cn(sectionStyles.padding, sectionStyles.background)}
       aria-labelledby="hero-heading"
     >
       <div 
-        className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-20"
+        className={getGridPatternClass()}
         aria-hidden="true"
       />
       
-      <Container className="relative">
+      <Container className={sectionStyles.container}>
         <motion.div
           className="flex flex-col items-center justify-center text-center"
           initial={{ opacity: 0 }}
@@ -50,7 +46,7 @@ const Hero = () => {
         >
           <motion.h1
             id="hero-heading"
-            className="text-4xl font-bold tracking-tighter text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl"
+            className={getHeadingClass(1, { tracking: 'tighter', align: 'center' })}
             variants={fadeInUpVariant}
             initial="hidden"
             animate="visible"

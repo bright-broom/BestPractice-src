@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* カラーシステム */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -23,11 +24,15 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
+
+    /* チャートカラー */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    /* 境界半径 */
     --radius: 0.5rem;
 
     /* シャドウシステム */
@@ -64,13 +69,15 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+
+    /* チャートカラー - ダークモード */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    /* ダークモード用シャドウ */
+    /* シャドウシステム - ダークモード */
     --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.2);
     --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.3);
     --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.4);
@@ -82,10 +89,13 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
   }
+
+  /* ベーステキストスタイル */
   h1 {
     @apply text-heading-1;
   }
@@ -97,24 +107,5 @@
   }
   h4 {
     @apply text-heading-4;
-  }
-}
-
-/* ユーティリティクラス */
-@layer components {
-  .layout-container {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8;
-  }
-  
-  .transition-standard {
-    @apply transition-all duration-300 ease-in-out;
-  }
-
-  .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  }
-
-  .interactive-scale {
-    @apply hover:scale-[1.02] active:scale-[0.98] transition-standard;
   }
 }

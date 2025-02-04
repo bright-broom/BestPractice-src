@@ -25,12 +25,20 @@ export default function SignInPage() {
     const password = formData.get("password") as string;
 
     try {
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         email,
         password,
-        callbackUrl,
-        redirect: true,
+        redirect: false,
       });
+
+      if (result?.error) {
+        console.error("Authentication error:", result.error);
+        return;
+      }
+
+      // 認証成功後、callbackUrlまたはデフォルトページにリダイレクト
+      const redirectUrl = callbackUrl || "/";
+      router.push(redirectUrl);
     } catch (error) {
       console.error("Authentication error:", error);
     } finally {
